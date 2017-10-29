@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -94,6 +95,12 @@ public class MyListActivity extends AppCompatActivity {
         setUpRecyclerView();
 
         updateMediaItems(storageUtil.getMediaDataList());
+
+//        TODO::
+        MediaItem item = new MediaItem();
+        JSONObject  jsonObject = item.toJson();
+
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
 
         //Update list every 10 sec
         final Handler handler = new Handler();

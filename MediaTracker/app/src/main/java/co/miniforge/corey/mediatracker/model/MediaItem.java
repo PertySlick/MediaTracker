@@ -20,6 +20,9 @@ public class MediaItem {
     public String description;
     public String url;
 
+//    TODO:  ENUM to store the types we support
+    public MediaItemType type = MediaItemType.Generic;
+
     public MediaItem(JSONObject jsonObject){
         try{
             //Generate id based on the object instance (should work :D)
@@ -27,6 +30,8 @@ public class MediaItem {
             this.title = jsonObject.getString("title");
             this.description = jsonObject.getString("description");
             this.url = jsonObject.getString("url");
+
+            this.type = getTypeForObject((MediaItemType)jsonObject.get( "type" ));
         } catch (Exception e){
             Log.e("toJSONError", String.format("There was an error: %s", e.getMessage()));
         }
@@ -39,6 +44,18 @@ public class MediaItem {
         this.url = "defaultUrl";
     }
 
+//    TODO:
+    public MediaItemType getTypeForObject(MediaItemType value) {
+        switch (value) {
+            case Tv:
+                return MediaItemType.Tv;
+            case Movie:
+                return MediaItemType.Movie;
+            default:
+                return MediaItemType.Generic;
+        }
+    }
+
     public JSONObject toJson(){
         JSONObject mediaItem = new JSONObject();
 
@@ -47,6 +64,8 @@ public class MediaItem {
             mediaItem.put("title", this.title);
             mediaItem.put("description", this.description);
             mediaItem.put("url", this.url);
+
+            mediaItem.put("type", this.type);
         } catch (Exception e){
             Log.e("toJSONError", String.format("There was an error: %s", e.getMessage()));
         }

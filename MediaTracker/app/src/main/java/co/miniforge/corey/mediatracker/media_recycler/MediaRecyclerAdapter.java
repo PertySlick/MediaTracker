@@ -26,6 +26,8 @@ public class MediaRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+
         ((MediaViewHolder)holder).bindData(mediaItems.get(position));
     }
 
