@@ -100,7 +100,8 @@ public class MyListActivity extends AppCompatActivity {
         MediaItem item = new MediaItem();
         JSONObject  jsonObject = item.toJson();
 
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+//      TODO - Consider for removal as unnecessary (left by previous author?)
+        //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
 
         //Update list every 10 sec
         final Handler handler = new Handler();

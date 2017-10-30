@@ -39,9 +39,9 @@ public class MediaItem {
 
     public MediaItem(){
         this.id = Md5IdHelper.idForObject(defaultId++);
-        this.title = "defaultTitle";
-        this.description = "defaultDescription";
-        this.url = "defaultUrl";
+        this.title = "Default Title";
+        this.description = "Default Description";
+        this.url = "Default URL";
     }
 
 //    TODO:
@@ -71,5 +71,11 @@ public class MediaItem {
         }
 
         return mediaItem;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Media Item: " + this.id + " (" + this.title + ")";
     }
 }
