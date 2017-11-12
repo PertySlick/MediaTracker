@@ -13,7 +13,10 @@ import co.miniforge.corey.mediatracker.media_store.Md5IdHelper;
  */
 
 public class MediaItem {
-    public static int defaultId = 0;
+
+
+// FIELDS, OBJECTS, CONSTANTS
+
 
     public String id;
     public String title;
@@ -31,28 +34,38 @@ public class MediaItem {
             this.description = jsonObject.getString("description");
             this.url = jsonObject.getString("url");
 
-            this.type = getTypeForObject((MediaItemType)jsonObject.get( "type" ));
+            this.type = getTypeForString(jsonObject.getString( "type" ));
         } catch (Exception e){
             Log.e("toJSONError", String.format("There was an error: %s", e.getMessage()));
         }
     }
 
     public MediaItem(){
-        this.id = Md5IdHelper.idForObject(defaultId++);
+        this.id = Md5IdHelper.idForObject(this);
         this.title = "Default Title";
         this.description = "Default Description";
         this.url = "Default URL";
     }
 
-//    TODO:
-    public MediaItemType getTypeForObject(MediaItemType value) {
+    public MediaItemType getTypeForString(String value) {
         switch (value) {
-            case Tv:
-                return MediaItemType.Tv;
-            case Movie:
+            case "TV":
+                return MediaItemType.TV;
+            case "Movie":
                 return MediaItemType.Movie;
             default:
                 return MediaItemType.Generic;
+        }
+    }
+
+    public String getStringForType (MediaItemType type) {
+        switch (type) {
+            case Movie:
+                return "Movie";
+            case TV:
+                return "TV";
+            default:
+                return "Generic";
         }
     }
 
