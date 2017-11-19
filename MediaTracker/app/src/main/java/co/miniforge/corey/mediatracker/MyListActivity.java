@@ -10,9 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -23,17 +26,16 @@ import java.util.List;
 import co.miniforge.corey.mediatracker.media_recycler.MediaRecyclerAdapter;
 import co.miniforge.corey.mediatracker.media_store.MediaStorageUtil;
 import co.miniforge.corey.mediatracker.model.MediaItem;
+import co.miniforge.corey.mediatracker.ui_helpers.ThemeHelper;
 
 public class MyListActivity extends AppCompatActivity {
     public static String mediaExtra = "mediaExtra";
 
     RecyclerView media_list_recycler;
-
     FloatingActionButton add_media_item_button;
-
     MediaStorageUtil storageUtil;
-
     List<MediaItem> mediaItems = new LinkedList<>();
+    ThemeHelper th;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,8 @@ public class MyListActivity extends AppCompatActivity {
             }
         };
         handler.post(runnable);
+
+        th = new ThemeHelper(getApplicationContext());
     }
 
     public void updateMediaItems(List<MediaItem> mediaItems){
@@ -140,5 +144,58 @@ public class MyListActivity extends AppCompatActivity {
 
         storageUtil.saveMediaData(mediaItems);
         updateMediaItems(storageUtil.getMediaDataList());
+    }
+
+    /* ASSIGNMENT 6 - UI THEMES */
+
+    /**
+     * TODO: Creates an option menu item...???
+     * @param menu Menu item...???
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_my_list, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                th.enableDarkTheme(!th.darkThemeEnabled());
+                switchTheme();
+        }
+        return true;
+    }
+
+    /**
+     * Switches all elements to the newly toggled color theme
+     */
+    private void switchTheme() {
+        th.themeBackground(findViewById(R.id.rootLayout));
+
+        // TODO: Nothing below seems to work
+        List<TextView> textViews = getTextViews((ViewGroup) ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0));
+        th.themeTextView(textViews);
+    }
+
+    /**
+     * An attempt to gather all TextViews for sending to the ThemeHelper object
+     * for theme switching...
+     * @param root
+     * @return
+     */
+    private LinkedList<TextView> getTextViews(ViewGroup root) {
+        LinkedList<TextView> textViews = new LinkedList<TextView>();
+
+        for (int i = 0; i < root.getChildCount(); i++) {
+            View v = root.getChildAt(i);
+            if (v instanceof TextView) { textViews.add( (TextView)v ); }
+        }
+
+        return textViews;
     }
 }

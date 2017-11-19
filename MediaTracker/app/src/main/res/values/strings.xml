@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="detail_title_text">Media Title</string>
     <string name="error_json_object">There was an error creating a JSON object</string>
+
+    <string name="action_toggle_theme">Theme Toggle</string>
 </resources>
