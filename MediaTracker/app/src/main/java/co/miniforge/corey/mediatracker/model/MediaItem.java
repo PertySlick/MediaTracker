@@ -54,6 +54,7 @@ public class MediaItem {
     public MediaItem(MediaItemType type) {
         this();
         this.type = type;
+        this.title = "Default " + getStringForType(type) + " Title";
     }
 
     public MediaItemType getTypeForString(String value) {
