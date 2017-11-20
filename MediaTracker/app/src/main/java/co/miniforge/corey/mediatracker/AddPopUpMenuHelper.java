@@ -5,6 +5,7 @@ import android.widget.PopupMenu;
 
 import co.miniforge.corey.mediatracker.model.MediaItem;
 import co.miniforge.corey.mediatracker.model.MediaItemType;
+import co.miniforge.corey.mediatracker.model.MovieModel;
 
 /**
  * Assignment 6 - Select Type on creation

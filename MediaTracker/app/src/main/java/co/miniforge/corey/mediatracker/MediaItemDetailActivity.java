@@ -82,8 +82,10 @@ public class MediaItemDetailActivity extends AppCompatActivity {
                 fragment = MediaItemDetailFragment.create(mediaItem);
                 break;
             case Movie:
+                fragment = MediaItemDetailFragment.create(mediaItem);
                 break;
             case TV:
+                fragment = MediaItemDetailFragment.create(mediaItem);
                 break;
         }
 
