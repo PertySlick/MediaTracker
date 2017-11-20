@@ -1,5 +1,8 @@
 package co.miniforge.corey.mediatracker;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,9 +51,10 @@ public class MediaItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_item_detail);
 
-        locateViews();
+        //locateViews();
         readIntents();
-        bindFunctionality();
+        //bindFunctionality();
+        createFragmentForMediaItemType(newMedia);
     }
 
 
@@ -65,47 +69,68 @@ public class MediaItemDetailActivity extends AppCompatActivity {
             // Proceed if conversion to JSON Object successful
             if (toJsonIntent(intentText)) {
                 newMedia = new MediaItem(jsonIntent);
-                populateFields();
+                //populateFields();
             }
         }
+    }
+
+    private void createFragmentForMediaItemType(MediaItem mediaItem) {
+        Fragment fragment = null;
+
+        switch (mediaItem.type) {
+            case Generic:
+                fragment = MediaItemDetailFragment.create(mediaItem);
+                break;
+            case Movie:
+                break;
+            case TV:
+                break;
+        }
+
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 
 
     /**
      * Locates views within activity and assigns them to their appropriate identifier for later use
+     * REMOVED AS PART OF FRAGMENT UTILIZATION
      */
-    private void locateViews() {
-        title = (EditText) findViewById(R.id.detail_input_title);
-        description = (EditText) findViewById(R.id.detail_input_desc);
-        url = (EditText) findViewById(R.id.detail_input_url);
-        save = (Button) findViewById(R.id.detail_button_save);
-    }
+//    private void locateViews() {
+//        title = (EditText) findViewById(R.id.detail_input_title);
+//        description = (EditText) findViewById(R.id.detail_input_desc);
+//        url = (EditText) findViewById(R.id.detail_input_url);
+//        save = (Button) findViewById(R.id.detail_button_save);
+//    }
 
     /**
      * Assigns activity functionality including onClickListeners.
+     * REMOVED AS PART OF FRAGMENT UTILIZATION
      */
-    private void bindFunctionality() {
-        save.setOnClickListener(new View.OnClickListener() {
-
-
-            /**
-             * When "save" button is clicked, assemble EditText field values into a MediaItem and
-             * then convert to a JSON Object string value for use in an intent.  Send via intent to
-             * the MyListActivity activity.
-             * @param view The view that triggered the onClick event
-             */
-            @Override
-            public void onClick(View view) {
-                setMediaItem();
-                String jsonValue = newMedia.toJson().toString();
-
-                Intent intent = new Intent(getApplicationContext(), MyListActivity.class);
-                intent.putExtra(MyListActivity.mediaExtra, jsonValue);
-                startActivity(intent);
-            }
-
-        });
-    }
+//    private void bindFunctionality() {
+//        save.setOnClickListener(new View.OnClickListener() {
+//
+//
+//            /**
+//             * When "save" button is clicked, assemble EditText field values into a MediaItem and
+//             * then convert to a JSON Object string value for use in an intent.  Send via intent to
+//             * the MyListActivity activity.
+//             * @param view The view that triggered the onClick event
+//             */
+//            @Override
+//            public void onClick(View view) {
+//                setMediaItem();
+//                String jsonValue = newMedia.toJson().toString();
+//
+//                Intent intent = new Intent(getApplicationContext(), MyListActivity.class);
+//                intent.putExtra(MyListActivity.mediaExtra, jsonValue);
+//                startActivity(intent);
+//            }
+//
+//        });
+//    }
 
 
 // METHODS - SUB-ROUTINES
