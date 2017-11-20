@@ -47,6 +47,15 @@ public class MediaItem {
         this.url = "Default URL";
     }
 
+    /**
+     * Special constructor for setting item type during creation
+     * @param type MediaItemType value
+     */
+    public MediaItem(MediaItemType type) {
+        this();
+        this.type = type;
+    }
+
     public MediaItemType getTypeForString(String value) {
         switch (value) {
             case "TV":

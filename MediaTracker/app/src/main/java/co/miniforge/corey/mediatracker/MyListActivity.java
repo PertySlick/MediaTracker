@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,11 +87,17 @@ public class MyListActivity extends AppCompatActivity {
         add_media_item_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Create new empty media item
-                MediaItem item = new MediaItem();
-                mediaItems.add(item);
-                storageUtil.saveMediaData(mediaItems);
-                updateMediaItems(mediaItems);
+                PopupMenu menu = new PopupMenu(view.getContext(), view);
+                menu.inflate(R.menu.add_menu);
+                menu.setOnMenuItemClickListener( new AddPopUpMenuHelper((MyListActivity)view.getContext()));
+                menu.show();
+
+                /* REMOVED AS PART OF SELECT TYPE INSTRUCTIONS */
+//                //Create new empty media item
+//                MediaItem item = new MediaItem();
+//                mediaItems.add(item);
+//                storageUtil.saveMediaData(mediaItems);
+//                updateMediaItems(mediaItems);
             }
         });
 
@@ -197,5 +204,13 @@ public class MyListActivity extends AppCompatActivity {
         }
 
         return textViews;
+    }
+
+    /* SELECT TYPE ON CREATION */
+
+    public void addMediaItem(MediaItem item) {
+        mediaItems.add(item);
+        storageUtil.saveMediaData(mediaItems);
+        updateMediaItems(mediaItems);
     }
 }
